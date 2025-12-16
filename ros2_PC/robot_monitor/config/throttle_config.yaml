@@ -1,0 +1,38 @@
+# ========================================
+# 節流配置 (Throttling Configuration)
+# ========================================
+# 此配置文件統一管理所有節流相關參數
+# 用以保持 trust_map_solver 和 pc_monitor_launch 的同步
+
+# 1. 掃描數據節流 (LiDAR Scan Throttling)
+scan_throttle:
+  # ROS 話題節流頻率 (Hz)
+  # 命令: ros2 run topic_tools throttle messages /scan 0.8 /scan_throttled
+  frequency: 0.8  # 0.8 Hz = 每 1.25 秒一次
+
+# 2. 地圖發佈節流 (Map Publishing Throttling)
+map_publish:
+  # trust_map_solver 的發佈頻率
+  # 應與 scan_throttle 頻率相同或更低，以保持同步
+  frequency: 0.8  # Hz (1.0 / 0.8 = 1.25 秒)
+  interval_sec: 1.25  # Python 中使用此值
+
+# 3. 網頁端節流 (Web Client Throttling)
+web_client:
+  # JavaScript 端的更新節流間隔
+  update_throttle_ms: 100  # 毫秒
+
+# 4. 算法參數
+algorithm:
+  # 信任度網格大小
+  grid_size: 0.1  # 公尺
+  
+  # 信任度閾值
+  trust_threshold: 4
+  trust_max: 10
+  
+  # 光線投射最大範圍
+  raycast_max_range: 5.0  # 公尺
+  
+  # 數據處理間隔
+  process_interval: 0.5  # 秒 (內部計算頻率)

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lidar SLAM Map Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="info-panel">
+        <div>X 軸距離: <span id="dist-x">0.00</span> m</div>
+        <div>Y 軸距離: <span id="dist-y">0.00</span> m</div>
+        <div>朝向角度: <span id="robot-theta">0.0</span>°</div>
+        <div class="status">狀態: 等待連線...</div>
+    </div>
+
+    <canvas id="mapCanvas"></canvas>
+
+    <div id="nav-bubble" class="hidden">
+        <span id="nav-text">前往</span>
+        <div class="bubble-arrow"></div>
+    </div>
+
+    <div id="scale-container">
+        <div id="scale-line"></div>
+        <span id="scale-text">1 m</span>
+    </div>
+
+    <!-- 導航控制欄（底部） -->
+    <div id="nav-bar" class="hidden nav-bar">
+        <div class="nav-info">
+            <span id="nav-status">狀態: 導航中</span>
+            <span id="nav-distance">距離目標: -- m</span>
+        </div>
+        <div class="nav-controls">
+            <button id="pause-btn" class="control-btn pause-btn">⏸ 暫停</button>
+            <button id="cancel-btn" class="control-btn cancel-btn">✕ 取消</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/eventemitter2@6.4.9/lib/eventemitter2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+
+    <script src="map_viewer.js"></script>
+</body>
+</html>
