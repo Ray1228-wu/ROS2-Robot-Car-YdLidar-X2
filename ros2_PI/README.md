@@ -22,7 +22,7 @@
 ### 背景模式啟動（推薦）✨
 
 ```bash
-cd ~/ros2_ws
+cd ~/ros2_ws/ros2_PI
 python3 robot_control/start_robot_simple.py --background --wait 10
 ```
 
@@ -39,7 +39,7 @@ python3 robot_control/start_robot_simple.py --background --wait 10
 ### 前景模式啟動（簡單，阻塞式）
 
 ```bash
-python3 ~/ros2_ws/robot_control/start_robot_simple.py
+python3 robot_control/start_robot_simple.py
 # 按 Ctrl+C 停止
 ```
 
@@ -50,7 +50,7 @@ python3 ~/ros2_ws/robot_control/start_robot_simple.py
 ### 步驟 1：編譯項目（只需一次）
 
 ```bash
-cd ~/ros2_ws
+cd ~/ros2_ws/ros2_PI
 colcon build
 ```
 
@@ -116,20 +116,20 @@ ros2 --version
 
 ```bash
 # 使用默認等待時間 (3.0 秒)
-python3 start_robot_simple.py --background
+    python3 robot_control/start_robot_simple.py --background
 
 # 指定等待時間（給 Raspberry Pi 更多初始化時間）
-python3 start_robot_simple.py --background --wait 5
+    python3 robot_control/start_robot_simple.py --background --wait 5
 
 # 使用自訂參數檔
-python3 start_robot_simple.py --background --wait 4 --params ./ydlidar.yaml
+    python3 robot_control/start_robot_simple.py --background --wait 4 --params ./ydlidar.yaml
 ```
 
 #### 後續步驟（同一終端）
 
 ```bash
 # 主程式返回後立即執行
-$ python3 start_robot_simple.py --background
+$ python3 robot_control/start_robot_simple.py --background
 ✅ LIDAR 背景服務已啟動 (PID: 2678)
 
 $ ros2 topic list              # ← 立即可執行！
@@ -141,7 +141,7 @@ $ python3 navigation_logic.py  # 執行導航邏輯
 
 ```bash
 # 終端 1：啟動 LIDAR (背景模式)
-$ python3 start_robot_simple.py --background --wait 4
+$ python3 robot_control/start_robot_simple.py --background --wait 4
 
 # 終端 2：監控日誌（可選）
 $ tail -f ~/ros2_ws/robot_control/logs/start_robot_launch.log
@@ -173,13 +173,13 @@ python3 start_robot_simple.py --params ./ydlidar.yaml
 
 ```bash
 # 背景模式 (推薦)
-python3 start_robot_simple.py --background --wait 4
+python3 robot_control/start_robot_simple.py --background --wait 4
 
 # 前景模式
 python3 start_robot_simple.py
 
 # 自訂參數
-python3 start_robot_simple.py --background --wait 5 --params /path/to/file.yaml
+python3 robot_control/start_robot_simple.py --background --wait 5 --params /path/to/file.yaml
 ```
 
 ### 日誌與監控
@@ -303,7 +303,7 @@ ls -la /dev/ttyUSB*
 sudo chmod 666 /dev/ttyUSB0
 
 # 3. 重新啟動
-python3 start_robot_simple.py --background
+python3 robot_control/start_robot_simple.py --background
 ```
 
 #### ❌ 「等待超時」或節點初始化慢
@@ -313,7 +313,7 @@ python3 start_robot_simple.py --background
 **解決：**
 ```bash
 # 增加等待時間到 5 秒
-python3 start_robot_simple.py --background --wait 5
+python3 robot_control/start_robot_simple.py --background --wait 5
 ```
 
 #### ❌ 後續命令無反應，沒有看到 `/scan` 主題
@@ -350,7 +350,7 @@ tail -f ~/ros2_ws/robot_control/logs/start_robot_launch.log
 Ctrl+C
 
 # 使用背景模式重新啟動
-python3 start_robot_simple.py --background --wait 4
+python3 robot_control/start_robot_simple.py --background --wait 4
 ```
 
 #### ❌ YAML 參數檔錯誤
@@ -366,7 +366,7 @@ cat ~/ros2_ws/src/ydlidar_ros2_driver/params/ydlidar.yaml
 python3 -c "import yaml; yaml.safe_load(open('ydlidar.yaml'))"
 
 # 使用默認參數檔
-python3 start_robot_simple.py --background
+python3 robot_control/start_robot_simple.py --background
 ```
 
 ### 系統診斷步驟
@@ -385,7 +385,7 @@ $ ls /dev/ttyUSB*
 /dev/ttyUSB0
 
 # 步驟 4：啟動並檢查
-$ python3 start_robot_simple.py --background
+$ python3 robot_control/start_robot_simple.py --background
 ✅ LIDAR 背景服務已啟動 (PID: XXXX)
 
 # 步驟 5：驗證主題
@@ -486,12 +486,12 @@ laser_frame (LIDAR 座標系)
 
 ```bash
 # 開發階段：背景模式 + 監控
-終端 1: python3 start_robot_simple.py --background --wait 5
+終端 1: python3 robot_control/start_robot_simple.py --background --wait 5
 終端 2: tail -f logs/start_robot_launch.log &
 終端 3: python3 navigation_logic.py
 
 # 測試階段：驗證各模組
-終端 1: python3 start_robot_simple.py --background
+終端 1: python3 robot_control/start_robot_simple.py --background
 終端 2: python3 encoder_reader.py
 終端 3: python3 motor_driver.py
 
@@ -562,7 +562,7 @@ cp ~/ros2_ws/robot_control/logs/start_robot_launch.log ~/logs_backup_$(date +%Y%
 # 一鍵重啟 LIDAR
 killall -9 ydlidar_ros2_driver_node 2>/dev/null
 sleep 2
-python3 ~/ros2_ws/robot_control/start_robot_simple.py --background
+python3 robot_control/start_robot_simple.py --background
 
 # 檢查系統狀態
 echo "=== ROS2 節點 ===" && ros2 node list && \
@@ -631,7 +631,7 @@ sudo usermod -a -G dialout $USER
 
 現在你已經了解了系統。選擇一個開始吧：
 
-1. **快速開始** → 執行 `python3 start_robot_simple.py --background --wait 4`
+1. **快速開始** → 執行 `python3 robot_control/start_robot_simple.py --background --wait 4`
 2. **深入學習** → 閱讀完整的技術細節部分
 3. **故障排查** → 如果遇到問題，查看故障排查章節
 4. **執行應用** → 運行 `navigation_logic.py` 等應用模組
