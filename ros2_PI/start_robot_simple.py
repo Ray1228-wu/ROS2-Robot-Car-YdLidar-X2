@@ -61,10 +61,22 @@ def run_launch_mode(workspace_root: Path, params_path: str | None = None, backgr
                    False = 前景阻塞，等待 launch 結束
         wait_time: 背景模式下，等待 ROS2 節點就緒的時間 (秒)
     """
-    setup_script = workspace_root / 'install' / 'setup.bash'
-    if not setup_script.exists():
+    # 嘗試多個可能的 setup 腳本位置
+    possible_setups = [
+        workspace_root / 'install' / 'setup.bash',  # 本地 build
+        Path('/opt/ros/humble/setup.bash'),  # 全局安裝
+    ]
+    
+    setup_script = None
+    for p in possible_setups:
+        if p.exists():
+            setup_script = p
+            break
+    
+    if not setup_script:
         print("❌ 錯誤: 找不到 ROS2 setup 腳本")
-        print(f"   {setup_script}")
+        for p in possible_setups:
+            print(f"   {p}")
         print("\n請先執行以下命令編譯項目:")
         print(f"  cd {workspace_root}")
         print("  colcon build")
@@ -91,7 +103,14 @@ def run_launch_mode(workspace_root: Path, params_path: str | None = None, backgr
     # 啟動前先清理可能遺留的相同進程
     cleanup_existing()
 
-    cmd = f"bash -i -c 'source {setup_script} && ros2 launch ydlidar_ros2_driver robot_control_launch.py{params_arg}'"
+    # 找到 launch 檔案
+    launch_file = workspace_root / 'install' / 'ydlidar_ros2_driver' / 'share' / 'ydlidar_ros2_driver' / 'launch' / 'robot_control_launch.py'
+    if not launch_file.exists():
+        print(f"❌ 錯誤: 找不到 launch 檔案")
+        print(f"   {launch_file}")
+        sys.exit(1)
+    
+    cmd = f"bash -i -c 'source /opt/ros/humble/setup.bash && source {setup_script} && ros2 launch {launch_file}{params_arg}'"
 
     with log_file_path.open('a', encoding='utf-8') as lf:
         lf.write("\n=== Launch start {} ===\n".format(time.strftime('%Y-%m-%d %H:%M:%S')))
@@ -157,17 +176,38 @@ def run_launch_mode(workspace_root: Path, params_path: str | None = None, backgr
         else:
             print(f"\n✅ 啟動結束 (code={proc.returncode})，日誌: {log_file_path}")
 
-def start_control_nodes(workspace_root: Path):
-    """啟動機器人控制節點（導航、編碼器、馬達）"""
+def start_control_nodes(workspace_root: Path, control_mode: str = 'auto'):
+    """
+    啟動機器人控制節點
+    
+    Args:
+        workspace_root: 工作區根目錄
+        control_mode: 'auto' = 自動模式 (motor_driver)
+                     'manual' = 手動模式 (manual_motor_driver)
+                     'both' = 同時啟動兩者 (不推薦，GPIO 衝突)
+    """
     control_dir = workspace_root / 'robot_control'
     log_dir = control_dir / 'logs'
     log_file_path = log_dir / 'robot_nodes.log'
     
-    nodes = [
+    # 根據模式選擇啟動哪些節點
+    base_nodes = [
         ('navigation_logic.py', '導航邏輯'),
         ('encoder_reader.py', '編碼器讀取'),
-        ('motor_driver.py', '馬達驅動'),
     ]
+    
+    if control_mode == 'manual':
+        nodes = base_nodes + [('manual_motor_driver.py', '手動馬達控制')]
+    elif control_mode == 'both':
+        nodes = base_nodes + [
+            ('motor_driver.py', '馬達驅動'),
+            ('manual_motor_driver.py', '手動馬達控制'),
+        ]
+    elif control_mode == 'manager':
+        # 使用模式管理器，自動切換手動/自動驅動
+        nodes = base_nodes + [('motor_mode_manager.py', '馬達模式管理器')]
+    else:  # auto (default)
+        nodes = base_nodes + [('motor_driver.py', '馬達驅動')]
     
     processes = []
     
@@ -230,10 +270,13 @@ def main():
                         help="背景模式：LIDAR 後台運行，主程式繼續執行後續步驟 (預設: False)")
     parser.add_argument("--wait", dest="wait_time", type=float, default=3.0,
                         help="背景模式下等待節點初始化時間 (秒，預設: 3.0)")
+    parser.add_argument("--control-mode", dest="control_mode", 
+                        choices=['auto', 'manual', 'both', 'manager'], default='manager',
+                        help="控制模式: auto=自動, manual=手動, manager=智能切換(推薦), both=兩者(不推薦)")
     args = parser.parse_args()
 
     script_dir = Path(__file__).parent
-    workspace_root = script_dir.parent
+    workspace_root = script_dir  # ros2_PI 本身就是工作區根目錄
     
     lidar_proc = run_launch_mode(
         workspace_root, 
@@ -248,7 +291,7 @@ def main():
         print("🚀 啟動機器人控制節點...")
         print("=" * 60)
         
-        control_nodes = start_control_nodes(workspace_root)
+        control_nodes = start_control_nodes(workspace_root, control_mode=args.control_mode)
         
         if control_nodes:
             print("\n✅ 所有系統已就緒！")

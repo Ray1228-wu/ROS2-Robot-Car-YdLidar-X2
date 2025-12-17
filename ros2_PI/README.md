@@ -23,7 +23,7 @@
 
 ```bash
 cd ~/ros2_ws/ros2_PI
-python3 robot_control/start_robot_simple.py --background --wait 10
+python3 start_robot_simple.py --background --wait 10
 ```
 
 **預期輸出：**
@@ -32,14 +32,14 @@ python3 robot_control/start_robot_simple.py --background --wait 10
    進程將在背景持續運行...
 
 🚀 後續步驟現在可以執行:
-   1. 運行導航程式: python3 ~/ros2_ws/robot_control/navigation_logic.py
+   1. 運行導航程式: python3 robot_control/navigation_logic.py
    2. 檢查訊息: ros2 topic list
 ```
 
 ### 前景模式啟動（簡單，阻塞式）
 
 ```bash
-python3 robot_control/start_robot_simple.py
+python3 start_robot_simple.py
 # 按 Ctrl+C 停止
 ```
 
@@ -122,7 +122,7 @@ ros2 --version
     python3 robot_control/start_robot_simple.py --background --wait 5
 
 # 使用自訂參數檔
-    python3 robot_control/start_robot_simple.py --background --wait 4 --params ./ydlidar.yaml
+    python3 robot_control/start_robot_simple.py --background --wait 4 --params ./robot_control/ydlidar.yaml
 ```
 
 #### 後續步驟（同一終端）
@@ -144,12 +144,12 @@ $ python3 navigation_logic.py  # 執行導航邏輯
 $ python3 robot_control/start_robot_simple.py --background --wait 4
 
 # 終端 2：監控日誌（可選）
-$ tail -f ~/ros2_ws/robot_control/logs/start_robot_launch.log
+$ tail -f robot_control/logs/start_robot_launch.log
 
 # 終端 3：執行應用邏輯
-$ python3 navigation_logic.py
-$ python3 encoder_reader.py
-$ python3 motor_driver.py
+$ python3 robot_control/navigation_logic.py
+$ python3 robot_control/encoder_reader.py
+$ python3 robot_control/motor_driver.py
 ```
 
 ### 前景模式詳細用法
@@ -159,7 +159,7 @@ $ python3 motor_driver.py
 python3 start_robot_simple.py
 
 # 使用自訂參數檔
-python3 start_robot_simple.py --params ./ydlidar.yaml
+python3 start_robot_simple.py --params ./robot_control/ydlidar.yaml
 
 # 停止（任何時候按 Ctrl+C）
 ^C  ← 會自動清理資源並結束
@@ -173,29 +173,29 @@ python3 start_robot_simple.py --params ./ydlidar.yaml
 
 ```bash
 # 背景模式 (推薦)
-python3 robot_control/start_robot_simple.py --background --wait 4
+python3 start_robot_simple.py --background --wait 4
 
 # 前景模式
 python3 start_robot_simple.py
 
 # 自訂參數
-python3 robot_control/start_robot_simple.py --background --wait 5 --params /path/to/file.yaml
+python3 start_robot_simple.py --background --wait 5 --params ./robot_control/ydlidar.yaml
 ```
 
 ### 日誌與監控
 
 ```bash
 # 即時監控日誌
-tail -f ~/ros2_ws/robot_control/logs/start_robot_launch.log
+tail -f robot_control/logs/start_robot_launch.log
 
 # 查看最後 20 行
-tail -20 ~/ros2_ws/robot_control/logs/start_robot_launch.log
+tail -20 robot_control/logs/start_robot_launch.log
 
 # 搜索錯誤
-grep -i "error\|fail" ~/ros2_ws/robot_control/logs/start_robot_launch.log
+grep -i "error\|fail" robot_control/logs/start_robot_launch.log
 
 # 查看完整日誌
-cat ~/ros2_ws/robot_control/logs/start_robot_launch.log
+cat robot_control/logs/start_robot_launch.log
 ```
 
 ### ROS2 診斷命令
@@ -223,6 +223,29 @@ ros2 topic echo /tf | head -20
 ros2 run tf2_tools view_frames
 ```
 
+### 網域設定（ROS_DOMAIN_ID）
+
+多機（PC ↔ 機器人）要互相看到主題，兩端必須設定相同的網域並允許非本機通訊。以下以 `30` 為例：
+
+```bash
+# 在機器人與 PC 兩邊都執行（同一個終端會話內生效）
+export ROS_DOMAIN_ID=30
+export ROS_LOCALHOST_ONLY=0
+
+# 驗證：應該能在兩邊互相看到 /motor_mode
+ros2 topic list | grep motor_mode || echo "not found"
+```
+
+可選：將設定持久化（下次登入自動生效）
+
+```bash
+echo 'export ROS_DOMAIN_ID=30' >> ~/.bashrc
+echo 'export ROS_LOCALHOST_ONLY=0' >> ~/.bashrc
+source ~/.bashrc
+```
+
+注意：請在啟動任何 ROS2 程式（例如 `start_robot_simple.py`、`motor_mode_manager.py`）之前設定好上述環境變數。
+
 ### 進程管理
 
 ```bash
@@ -246,17 +269,43 @@ systemctl status lidar-service
 
 ```bash
 # 編碼器讀取
-python3 encoder_reader.py
+python3 robot_control/encoder_reader.py
 
 # 馬達驅動
-python3 motor_driver.py
+python3 robot_control/motor_driver.py
 
 # 導航邏輯
-python3 navigation_logic.py
+python3 robot_control/navigation_logic.py
 
 # 安全控制
-python3 safety_controller.py
+python3 robot_control/safety_controller.py
 ```
+
+### 馬達模式切換（手動 ↔ 自動）
+
+後端 `motor_mode_manager.py` 會訂閱 PC 端發布的 `/motor_mode`（`std_msgs/String`）。當收到 `manual` 或 `auto` 字串時，會動態啟停對應驅動：
+
+- `manual`：啟動 `manual_motor_driver.py`，停止 `motor_driver.py`
+- `auto`：啟動 `motor_driver.py`，停止 `manual_motor_driver.py`
+
+使用方式（示例）：
+
+```bash
+# 啟動管理器（建議與其他模組同時運行）
+python3 robot_control/motor_mode_manager.py &
+
+# 在 PC 端按鈕切換時，發布到 /motor_mode：
+ros2 topic pub /motor_mode std_msgs/String "data: 'manual'" -1
+ros2 topic pub /motor_mode std_msgs/String "data: 'auto'" -1
+
+# 或者使用單鍵切換（每按一次在 auto/manual 間切換）
+ros2 topic pub /motor_mode std_msgs/String "data: 'toggle'" -1
+
+# 觀察切換日誌（可選）
+tail -f robot_control/logs/robot_nodes.log 2>/dev/null || true
+```
+
+注意：請確保同一時間只有一個 `motor_mode_manager` 實例在運行，以避免重複啟停造成衝突。
 
 ---
 
@@ -323,7 +372,7 @@ python3 robot_control/start_robot_simple.py --background --wait 5
 **解決：**
 ```bash
 # 在運行任何 ros2 命令前，先設置環境
-source ~/ros2_ws/install/setup.bash
+source ./install/setup.bash
 ros2 topic list
 ```
 
@@ -334,10 +383,10 @@ ros2 topic list
 **解決：**
 ```bash
 # 等待 2-3 秒後查看
-sleep 3 && cat ~/ros2_ws/robot_control/logs/start_robot_launch.log
+sleep 3 && cat robot_control/logs/start_robot_launch.log
 
 # 或使用即時監控
-tail -f ~/ros2_ws/robot_control/logs/start_robot_launch.log
+$ tail -f robot_control/logs/start_robot_launch.log
 ```
 
 #### ❌ 「無法執行後續步驟」，程式一直等待
@@ -360,7 +409,7 @@ python3 robot_control/start_robot_simple.py --background --wait 4
 **解決：**
 ```bash
 # 檢查參數檔是否存在
-cat ~/ros2_ws/src/ydlidar_ros2_driver/params/ydlidar.yaml
+cat src/ydlidar_ros2_driver/params/ydlidar.yaml
 
 # 驗證 YAML 語法
 python3 -c "import yaml; yaml.safe_load(open('ydlidar.yaml'))"
@@ -377,7 +426,7 @@ $ ros2 --version
 ROS 2 Humble
 
 # 步驟 2：檢查編譯
-$ ls ~/ros2_ws/install/ydlidar_ros2_driver
+$ ls ./install/ydlidar_ros2_driver
 # 應該看到 lib/, share/ 等資料夾
 
 # 步驟 3：驗證硬體
@@ -450,11 +499,11 @@ subprocess.Popen() 啟動 ros2 launch (非阻塞)
 ### LIDAR 參數說明
 
 ```yaml
-# ~/ros2_ws/src/ydlidar_ros2_driver/params/ydlidar.yaml
+# ./src/ydlidar_ros2_driver/params/ydlidar.yaml
 baudrate: 115200              # LIDAR 波特率
 sample_rate: 3                # 採樣率（支援 3, 4）
 fixed_resolution: true        # 固定分辨率模式
-frequency: 5.5                # 掃描頻率 (Hz)
+frequency: 5.0                # 掃描頻率 (Hz)
 lidar_type: 1                 # 類型：1 = 三角測量
 isSingleChannel: true         # 單通道模式
 port: /dev/ttyUSB0            # LIDAR 設備檔
@@ -464,8 +513,8 @@ port: /dev/ttyUSB0            # LIDAR 設備檔
 
 | 主題 | 訊息類型 | 來源 | 發布率 | 說明 |
 |------|---------|------|--------|------|
-| `/scan` | LaserScan | LIDAR | 5.5 Hz | 2D 雷射掃描數據 |
-| `/point_cloud` | PointCloud2 | LIDAR | 5.5 Hz | 3D 點雲數據 |
+| `/scan` | LaserScan | LIDAR | 5 Hz | 2D 雷射掃描數據 |
+| `/point_cloud` | PointCloud2 | LIDAR | 5 Hz | 3D 點雲數據 |
 | `/tf` | Transform | TF Publisher | 10 Hz | 座標變換 |
 | `/tf_static` | Transform | TF Publisher | 1 Hz | 靜態座標變換 |
 
@@ -542,7 +591,7 @@ laser_frame (LIDAR 座標系)
 
 ### 性能優化
 
-- **增加 LIDAR 掃描率**：修改 `frequency: 5.5` 為更高值（最多 10 Hz）
+- **增加 LIDAR 掃描率**：修改 `frequency: 3.3` 為更高值（最多 10 Hz，目前設為 0.3 秒/次）
 - **降低 CPU 佔用**：減少後台主題發布率，使用 `scan_throttled`
 - **改進導航精度**：調整 `sample_rate` 為 4（更多採樣點）
 
@@ -550,10 +599,10 @@ laser_frame (LIDAR 座標系)
 
 ```bash
 # 清理舊日誌
-echo > ~/ros2_ws/robot_control/logs/start_robot_launch.log
+echo > robot_control/logs/start_robot_launch.log
 
 # 備份日誌
-cp ~/ros2_ws/robot_control/logs/start_robot_launch.log ~/logs_backup_$(date +%Y%m%d).log
+cp robot_control/logs/start_robot_launch.log ./logs_backup_$(date +%Y%m%d).log
 ```
 
 ### 快速故障修復
@@ -600,7 +649,7 @@ A: 可配置 systemd 服務或 crontab（進階）。
 /sys/class/gpio/ (666)
 
 # 日誌檔目錄
-~/ros2_ws/robot_control/logs/ (755)
+robot_control/logs/ (755)
 ```
 
 ### 設置權限

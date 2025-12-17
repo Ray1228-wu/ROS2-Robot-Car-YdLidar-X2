@@ -124,8 +124,14 @@ def main(args=None):
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
-        pass
+        node.get_logger().info("導航節點中斷，停止馬達")
+    except Exception as e:
+        node.get_logger().error(f"導航節點異常: {e}，停止馬達")
     finally:
+        # 確保馬達停止
+        stop_cmd = Twist()
+        node.pub_cmd_vel.publish(stop_cmd)
+        node.get_logger().info("已發送馬達停止指令")
         node.destroy_node()
         rclpy.shutdown()
 
