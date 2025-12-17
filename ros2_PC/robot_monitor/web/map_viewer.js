@@ -6,6 +6,15 @@ const ctx = canvas.getContext('2d');
 const scaleText = document.getElementById('scale-text');
 const scaleLine = document.getElementById('scale-line');
 const navBubble = document.getElementById('nav-bubble');
+const manualToggleBtn = document.getElementById('manual-toggle');
+const manualPanel = document.getElementById('manual-panel');
+const keyElements = {
+    'W': document.querySelector('.key-w'),
+    'A': document.querySelector('.key-a'),
+    'S': document.querySelector('.key-s'),
+    'D': document.querySelector('.key-d'),
+};
+const rosStatusEl = document.getElementById('ros-status');
 
 // 視圖狀態
 let scale = 50; // 50 pixels = 1 meter
@@ -16,15 +25,156 @@ let startDragX, startDragY;
 let lastX, lastY;
 let targetX = 0, targetY = 0;
 
+// LiDAR 額外偏角（供前端臨時覆蓋，單位：度；來源：URL 參數 ?yaw= 或 localStorage.lidarYawDeg）
+const getYawDegFromEnv = () => {
+    try {
+        const url = new URL(window.location.href);
+        const yawParam = url.searchParams.get('yaw');
+        if (yawParam !== null && yawParam !== '') return parseFloat(yawParam);
+    } catch {}
+    try {
+        const y = localStorage.getItem('lidarYawDeg');
+        if (y !== null && y !== '') return parseFloat(y);
+    } catch {}
+    return 0;
+};
+let lidarYawDeg = getYawDegFromEnv();
+if (!Number.isFinite(lidarYawDeg)) lidarYawDeg = 0;
+let lidarYawOffsetRad = lidarYawDeg * Math.PI / 180;
+console.log(`[MapViewer] LiDAR 前端偏角: ${lidarYawDeg}° (${lidarYawOffsetRad.toFixed(4)} rad)`);
+
+// 水平反轉設定（URL 參數 ?mirrorX=1/0 或 localStorage.mirrorX）
+function parseBoolish(v, def=false) {
+    if (v === null || v === undefined || v === '') return def;
+    const s = String(v).toLowerCase();
+    if (s === '1' || s === 'true' || s === 'yes') return true;
+    if (s === '0' || s === 'false' || s === 'no') return false;
+    return def;
+}
+function getMirrorXFromEnv() {
+    try {
+        const url = new URL(window.location.href);
+        const p = url.searchParams.get('mirrorX');
+        if (p !== null) return parseBoolish(p, true);
+    } catch {}
+    try {
+        const ls = localStorage.getItem('mirrorX');
+        if (ls !== null) return parseBoolish(ls, true);
+    } catch {}
+    return true; // 需求：目前需要水平反轉，預設為開啟
+}
+let mirrorX = getMirrorXFromEnv();
+console.log(`[MapViewer] 水平反轉 mirrorX=${mirrorX}`);
+
+// 更新偏角（同時更新 localStorage 與畫面顯示）
+const updateYawUI = () => {
+    const el = document.getElementById('yaw-display');
+    if (el) el.innerText = `${Math.round(lidarYawDeg)}°`;
+};
+const clampDeg = (d) => {
+    // 夾在 [-180, 180]
+    let v = d;
+    while (v > 180) v -= 360;
+    while (v < -180) v += 360;
+    return v;
+};
+const setLidarYawDeg = (d) => {
+    lidarYawDeg = clampDeg(d);
+    lidarYawOffsetRad = lidarYawDeg * Math.PI / 180;
+    try { localStorage.setItem('lidarYawDeg', String(lidarYawDeg)); } catch {}
+    updateYawUI();
+    console.log(`[MapViewer] 更新 LiDAR 偏角: ${lidarYawDeg}° (${lidarYawOffsetRad.toFixed(4)} rad)`);
+};
+updateYawUI();
+
+// 羅盤畫布與拖曳控制
+const compass = document.getElementById('yaw-compass');
+const btnRST = document.getElementById('yaw-reset');
+if (btnRST) btnRST.addEventListener('click', () => setLidarYawDeg(0));
+
+let draggingCompass = false;
+function getCompassAngleDegFromEvent(e) {
+    if (!compass) return lidarYawDeg;
+    const rect = compass.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const mx = e.clientX;
+    const my = e.clientY;
+    // 以螢幕座標轉換為數學座標（y 向上），取得從 +X（右）逆時針的角度
+    const ang = Math.atan2(cy - my, mx - cx); // rad, 0=右, +90=上
+    const deg = ang * 180 / Math.PI;          // deg
+    // 轉為我們的 yaw 定義：0=上（北），正為逆時針
+    const yawFromNorth = deg - 90; // 上=0°
+    return clampDeg(yawFromNorth);
+}
+
+function drawCompass() {
+    if (!compass) return;
+    const ctx2 = compass.getContext('2d');
+    const w = compass.width, h = compass.height;
+    ctx2.clearRect(0,0,w,h);
+    const cx = w/2, cy = h/2, r = Math.min(w,h)/2 - 8;
+    // 外圈
+    ctx2.beginPath();
+    ctx2.arc(cx, cy, r, 0, Math.PI*2);
+    ctx2.strokeStyle = '#666';
+    ctx2.lineWidth = 2;
+    ctx2.stroke();
+    // 上方為「正前」的標記刻度
+    ctx2.beginPath();
+    ctx2.moveTo(cx, cy - r);
+    ctx2.lineTo(cx, cy - r + 10);
+    ctx2.strokeStyle = '#999';
+    ctx2.lineWidth = 2;
+    ctx2.stroke();
+    // 指針（以 yawDeg 繪製；0=上=正前，正為逆時針）
+    const angDeg = lidarYawDeg + 90; // 轉回 0=右 參考框架
+    const ang = angDeg * Math.PI / 180;
+    const ex = cx + Math.cos(ang) * (r - 6);
+    const ey = cy - Math.sin(ang) * (r - 6); // y 向上
+    ctx2.beginPath();
+    ctx2.moveTo(cx, cy);
+    ctx2.lineTo(ex, ey);
+    ctx2.strokeStyle = '#d32f2f';
+    ctx2.lineWidth = 3;
+    ctx2.stroke();
+    // 中心點
+    ctx2.beginPath();
+    ctx2.arc(cx, cy, 3, 0, Math.PI*2);
+    ctx2.fillStyle = '#d32f2f';
+    ctx2.fill();
+}
+
+if (compass) {
+    compass.addEventListener('mousedown', (e) => {
+        draggingCompass = true;
+        setLidarYawDeg(getCompassAngleDegFromEvent(e));
+    });
+    window.addEventListener('mousemove', (e) => {
+        if (!draggingCompass) return;
+        setLidarYawDeg(getCompassAngleDegFromEvent(e));
+    });
+    window.addEventListener('mouseup', () => {
+        draggingCompass = false;
+    });
+}
+
 // 機器人與地圖數據
 let mapData = []; 
 let robotPose = {x: 0, y: 0, theta: 0};
+// 頁面視圖固定偏移：取消（僅讓 LiDAR 點陣隨機器人旋轉）
+const viewRotationOffset = 0;
+// 固定箭頭旋轉偏移（畫面基準，逆時針 90°）
+const arrowRotationOffset = -Math.PI / 2;
 
 // 導航狀態
 let navigationActive = false;
 let navigationGoal = {x: 0, y: 0};
 let motorPaused = false;
 let encoderData = {x: 0, y: 0, theta: 0, distance: 0};  // 來自 PI 的編碼器數據
+
+// 馬達方向跟蹤（用於箭頭指向）
+let motorDirection = -50 * Math.PI / 180; // 初始逆時針 50 度，符合實際車頭方向
 
 // ==========================================
 // 2. 連接 ROS 2 (Connection)
@@ -36,28 +186,25 @@ const ros = new ROSLIB.Ros({
 
 ros.on('connection', () => {
     console.log('Connected to websocket server.');
-    const statusEl = document.querySelector('.status');
-    if(statusEl) {
-        statusEl.innerText = "狀態: ROS 已連線";
-        statusEl.style.color = "#00ff00"; 
+    if (rosStatusEl) {
+        rosStatusEl.innerText = "狀態: ROS 已連線";
+        rosStatusEl.style.color = "#00ff00"; 
     }
 });
 
 ros.on('error', (error) => {
     console.log('Error connecting to websocket server: ', error);
-    const statusEl = document.querySelector('.status');
-    if(statusEl) {
-        statusEl.innerText = "狀態: 連線錯誤 (檢查 rosbridge)";
-        statusEl.style.color = "#ff0000";
+    if (rosStatusEl) {
+        rosStatusEl.innerText = "狀態: 連線錯誤 (檢查 rosbridge)";
+        rosStatusEl.style.color = "#ff0000";
     }
 });
 
 ros.on('close', () => {
     console.log('Connection closed.');
-    const statusEl = document.querySelector('.status');
-    if(statusEl) {
-        statusEl.innerText = "狀態: 連線中斷";
-        statusEl.style.color = "#ff0000";
+    if (rosStatusEl) {
+        rosStatusEl.innerText = "狀態: 連線中斷";
+        rosStatusEl.style.color = "#ff0000";
     }
 });
 
@@ -101,6 +248,30 @@ mapListener.subscribe((message) => {
 });
 
 // ==========================================
+// 說明按鈕與對話框
+// ==========================================
+const helpBtn = document.getElementById('help-btn');
+const helpModal = document.getElementById('help-modal');
+const helpClose = document.getElementById('help-close');
+
+if (helpBtn && helpModal && helpClose) {
+    helpBtn.addEventListener('click', () => {
+        helpModal.classList.remove('hidden');
+    });
+    
+    helpClose.addEventListener('click', () => {
+        helpModal.classList.add('hidden');
+    });
+    
+    // 點擊外層背景也可以關閉
+    helpModal.addEventListener('click', (e) => {
+        if (e.target === helpModal) {
+            helpModal.classList.add('hidden');
+        }
+    });
+}
+
+// ==========================================
 // ROS Topic 發佈（導航目標和馬達控制）
 // ==========================================
 
@@ -117,6 +288,32 @@ const motorControlPublisher = new ROSLIB.Topic({
     name: '/motor_control',
     messageType: 'std_msgs/String'
 });
+
+// 發佈手動控制信號 (WASD 鍵盤控制)
+const manualControlPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/manual_control',
+    messageType: 'std_msgs/String'
+});
+
+// 發佈馬達模式（manual/auto），供後端選擇驅動檔
+const motorModePublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/motor_mode',
+    messageType: 'std_msgs/String'
+});
+
+function enableManualMode() {
+    const msg = new ROSLIB.Message({ data: 'manual' });
+    motorModePublisher.publish(msg);
+    console.log('已切換到手動模式');
+}
+
+function disableManualMode() {
+    const msg = new ROSLIB.Message({ data: 'auto' });
+    motorModePublisher.publish(msg);
+    console.log('已切換到自動模式');
+}
 
 // 訂閱編碼器數據 (來自 PI)
 const encoderTopic = new ROSLIB.Topic({
@@ -161,9 +358,17 @@ function draw() {
     // ==========================================
     ctx.save();
     
-    // 視角變換
-    ctx.translate(offsetX, offsetY); 
+    // 視角變換 + 以機器人位置為樞紐旋轉地圖（箭頭保持朝上）
+    ctx.translate(offsetX, offsetY);
     ctx.scale(scale, scale);
+    if (mirrorX) {
+        // 全域水平反轉（不影響箭頭，箭頭獨立繪製）
+        ctx.scale(-1, 1);
+    }
+    ctx.translate(robotPose.x, robotPose.y);
+    // 改回負角旋轉以維持正確左右方向（Canvas 正角為順時針）
+    ctx.rotate(-(robotPose.theta + lidarYawOffsetRad));
+    ctx.translate(-robotPose.x, -robotPose.y);
     
     ctx.fillStyle = 'black';
     const GRID_SIZE = 0.1; 
@@ -203,7 +408,8 @@ function draw() {
     const robotScreenY = robotPose.y * scale + offsetY;
     
     ctx.translate(robotScreenX, robotScreenY);
-    ctx.rotate(robotPose.theta);
+    // 箭頭固定朝向畫面正上（逆時針 90° 偏移）
+    ctx.rotate(arrowRotationOffset);
 
     // 箭頭大小 (隨縮放，但限制最小/最大尺寸)
     const arrowSize = Math.min(Math.max(0.25 * scale, 8), 40); // 0.25m 基準，8-40px 範圍
@@ -243,7 +449,28 @@ function draw() {
     ctx.restore();
     
     updateScaleIndicator();
+    // 繪製左下角羅盤
+    drawCompass();
     requestAnimationFrame(draw);
+}
+
+// 將螢幕座標轉換為世界座標（考慮以機器人為旋轉樞紐）
+function screenToWorld(screenX, screenY) {
+    let vx = (screenX - offsetX) / scale;
+    const vy = (screenY - offsetY) / scale;
+    if (mirrorX) {
+        // 與 draw() 的 ctx.scale(-1,1) 對應：螢幕座標 x 取負
+        vx = -vx;
+    }
+    const px = vx - robotPose.x;
+    const py = vy - robotPose.y;
+    const theta = robotPose.theta + lidarYawOffsetRad;
+    const cos = Math.cos(theta);
+    const sin = Math.sin(theta);
+    // 逆變換：旋轉 +theta（對應 draw() 的 -theta）
+    const rx = cos * px - sin * py;
+    const ry = sin * px + cos * py;
+    return { x: rx + robotPose.x, y: ry + robotPose.y };
 }
 
 // 更新比例尺
@@ -305,17 +532,160 @@ window.addEventListener('mouseup', () => {
 
 // --- 右鍵點擊跳出泡泡 ---
 canvas.addEventListener('contextmenu', (e) => {
+    if (manualEnabled) return; // 手動模式時鎖定導航泡泡
     e.preventDefault();
-    const worldX = (e.clientX - offsetX) / scale;
-    const worldY = (e.clientY - offsetY) / scale;
-    
-    targetX = worldX;
-    targetY = worldY;
+    const world = screenToWorld(e.clientX, e.clientY);
+    targetX = world.x;
+    targetY = world.y;
 
     if(navBubble) {
         navBubble.style.left = `${e.clientX}px`;
         navBubble.style.top = `${e.clientY}px`;
         navBubble.classList.remove('hidden');
+    }
+});
+
+// --- 鍵盤控制 (WASD 前後左右，Space 暫停) ---
+const keyState = {};
+let manualLoopTimer = null;
+let lastSentCommand = null;
+let lastSendTime = 0;
+const MANUAL_LOOP_MS = 100; // 10 Hz
+let manualEnabled = false;
+let modeSwitchPending = false; // 切換等待期間封鎖手動控制
+const MODE_SWITCH_DELAY_MS = 700; // 模式切換緩衝時間（毫秒）
+
+const updateKeyVisuals = () => {
+    Object.entries(keyElements).forEach(([k, el]) => {
+        if (!el) return;
+        if (keyState[k]) {
+            el.classList.add('active');
+        } else {
+            el.classList.remove('active');
+        }
+    });
+};
+
+const pickCommandFromKeys = () => {
+    // W/S/A/D 優先級
+    if (keyState['W']) return 'FORWARD|0.3';
+    if (keyState['S']) return 'BACKWARD|0.3';
+    if (keyState['A']) return 'LEFT|0.3';
+    if (keyState['D']) return 'RIGHT|0.3';
+    return 'STOP';
+};
+
+const publishManualCommand = (cmd) => {
+    const msg = new ROSLIB.Message({ data: cmd });
+    manualControlPublisher.publish(msg);
+    lastSentCommand = cmd;
+    lastSendTime = Date.now();
+    // 只有 W 前進更新箭頭方向，S/A/D 不影響；逆時針 50 度偏移
+    if (cmd === 'FORWARD|0.3') motorDirection = -50 * Math.PI / 180;
+    console.log(`手動控制: ${cmd}`);
+};
+
+const startManualLoop = () => {
+    if (manualLoopTimer) return;
+    manualLoopTimer = setInterval(() => {
+        const cmd = pickCommandFromKeys();
+        // 規則：按住鍵時每 0.1s 發送；STOP 只在狀態改變時發送一次
+        if (cmd !== 'STOP') {
+            publishManualCommand(cmd);
+        } else if (lastSentCommand !== 'STOP') {
+            publishManualCommand('STOP');
+        }
+    }, MANUAL_LOOP_MS);
+};
+
+const stopManualLoop = () => {
+    if (manualLoopTimer) {
+        clearInterval(manualLoopTimer);
+        manualLoopTimer = null;
+    }
+};
+
+window.addEventListener('keydown', (e) => {
+    const key = e.key.toUpperCase();
+    if (!manualEnabled || modeSwitchPending) return; // 切換期間不接受鍵盤控制
+    if (!['W','A','S','D'].includes(key)) return;
+    keyState[key] = true;
+    updateKeyVisuals();
+    startManualLoop();
+});
+
+window.addEventListener('keyup', (e) => {
+    const key = e.key.toUpperCase();
+    if (!manualEnabled || modeSwitchPending) return; // 切換期間不接受鍵盤控制
+    if (!['W','A','S','D'].includes(key)) return;
+    keyState[key] = false;
+    updateKeyVisuals();
+    // 若所有鍵都放開，發送 STOP 並停止迴圈
+    const anyPressed = Object.values(keyState).some(v => v);
+    if (!anyPressed) {
+        publishManualCommand('STOP');
+        stopManualLoop();
+    }
+});
+
+// 手動模式切換按鈕
+if (manualToggleBtn) {
+    manualToggleBtn.addEventListener('click', () => {
+        if (!manualPanel) return;
+        // 進入切換等待
+        modeSwitchPending = true;
+        manualToggleBtn.disabled = true;
+        manualToggleBtn.innerText = '切換中…';
+
+        if (!manualEnabled) {
+            // 切到手動：先發 'manual'，等待訂閱生效後再開放手動
+            motorModePublisher.publish(new ROSLIB.Message({ data: 'manual' }));
+            setTimeout(() => {
+                modeSwitchPending = false;
+                manualEnabled = true;
+                // 更新本地 UI
+                manualPanel.classList.toggle('hidden', !manualEnabled);
+                manualToggleBtn.classList.toggle('active', manualEnabled);
+                manualToggleBtn.innerText = '手動模式 ON';
+                manualToggleBtn.disabled = false;
+            }, MODE_SWITCH_DELAY_MS);
+        } else {
+            // 切回自動：先發 STOP，再發 'auto'，等待退出完成
+            publishManualCommand('STOP');
+            motorModePublisher.publish(new ROSLIB.Message({ data: 'auto' }));
+            // 重置鍵態與循環
+            Object.keys(keyState).forEach(k => keyState[k] = false);
+            updateKeyVisuals();
+            stopManualLoop();
+            if (navBubble) navBubble.classList.add('hidden');
+
+            setTimeout(() => {
+                modeSwitchPending = false;
+                manualEnabled = false;
+                // 更新本地 UI
+                manualPanel.classList.toggle('hidden', !manualEnabled);
+                manualToggleBtn.classList.toggle('active', manualEnabled);
+                manualToggleBtn.innerText = '手動模式';
+                manualToggleBtn.disabled = false;
+            }, MODE_SWITCH_DELAY_MS);
+        }
+    });
+}
+
+// 視窗失焦或頁面隱藏時立即 STOP，符合 watchdog 安全規則
+window.addEventListener('blur', () => {
+    if (!manualEnabled) return;
+    publishManualCommand('STOP');
+    Object.keys(keyState).forEach(k => keyState[k] = false);
+    updateKeyVisuals();
+    stopManualLoop();
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && manualEnabled) {
+        publishManualCommand('STOP');
+        Object.keys(keyState).forEach(k => keyState[k] = false);
+        updateKeyVisuals();
+        stopManualLoop();
     }
 });
 

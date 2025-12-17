@@ -14,11 +14,13 @@ Trust Map Solver - 處理 YDLidar X2 掃描數據並轉換為網頁可視化地�
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 import json
 import time
 import math
+import os
 from sensor_msgs.msg import LaserScan
+from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
@@ -31,6 +33,7 @@ class TrustMapSolver(Node):
         
         # 發佈器
         self.map_pub = self.create_publisher(String, '/viz_map_data', 10)
+        self.manual_control_pub = self.create_publisher(String, '/manual_control', 10)  # 用於緊急停止
         
         # 修復 QoS 不兼容問題：使用 BEST_EFFORT 策略以兼容 topic_tools
         qos_profile = QoSProfile(
@@ -45,6 +48,14 @@ class TrustMapSolver(Node):
             '/scan_throttled',  # 訂閱已節流的掃描話題
             self.scan_callback,
             qos_profile
+        )
+
+        # 訂閱編碼器狀態（里程計）
+        self.odom_sub = self.create_subscription(
+            Twist,
+            '/encoder_state',
+            self.odom_callback,
+            10
         )
         
         # TF 監聽器 (追蹤機器人位置)
@@ -63,19 +74,33 @@ class TrustMapSolver(Node):
         self.trust_increase_rate = 2     # 每次掃描增加的信任值
         self.trust_decrease_rate = 0.5   # 每秒衰減的信任值
         
-        # 地圖資料
-        self.grid_map = {}          # 格式: {(x,y): {'trust': float, 'last_seen': time}}
-        self.current_scan_cells = set()  # 當前掃描範圍內的格子
+        # 機器人姿態
         self.robot_pose = {'x': 0.0, 'y': 0.0, 'theta': 0.0}
+        self.last_slam_pose = None
+        self.last_slam_time = None
+        self.last_odom_pose = None
+        self.last_odom_time = None
+        self.last_alert_time = 0.0
+        self.slam_unstable = False  # 標記 SLAM 不穩定，暫停衰減
+        self.slam_recovery_time = None
         
-        # 頻率限制 (1.25 Hz，與 scan_throttle 同步)
-        self.publish_interval = 0.8  # 秒 (1.25 Hz)
+        # 頻率限制 (3.3 Hz)
+        self.publish_interval = 0.3  # 秒 (0.3 秒更新一次)
         self.last_publish_time = time.time()
         self.scan_count = 0
         
-        self.get_logger().info("Trust Map Solver Started - Processing YDLidar X2 data (1.25 Hz)")
+        self.get_logger().info("Trust Map Solver Started - Processing YDLidar X2 data (3.3 Hz)")
         self.get_logger().info(f"Subscribing to: /scan_throttled")
         self.get_logger().info(f"Publishing to: /viz_map_data")
+        
+        # LiDAR 與車身之固定偏角（度數透過環境變數 LIDAR_YAW_DEG 設定，正為逆時針）
+        try:
+            yaw_deg = float(os.environ.get('LIDAR_YAW_DEG', '0'))
+        except Exception:
+            yaw_deg = 0.0
+        self.lidar_yaw_offset_rad = yaw_deg * math.pi / 180.0
+        # 記錄偏角（無論是否為 0，方便除錯）
+        self.get_logger().info(f"LiDAR 偏角: {yaw_deg:.2f}° ({self.lidar_yaw_offset_rad:.4f} rad)")
 
     def scan_callback(self, msg):
         """
@@ -102,7 +127,6 @@ class TrustMapSolver(Node):
         self.scan_count += 1
         hit_points = []
         free_points = []
-        self.current_scan_cells = set()  # 重置當前掃描範圍
         current_time = time.time()
         
         # 【關鍵】獲取機器人當前位置（全局座標）
@@ -132,6 +156,27 @@ class TrustMapSolver(Node):
         robot_x = self.robot_pose['x']
         robot_y = self.robot_pose['y']
         robot_theta = self.robot_pose['theta']
+
+        # --- A. 座標跳變偵測 (Anti-Jump Monitor) ---
+        now_time = time.time()
+        if self.last_slam_pose is not None and self.last_slam_time is not None:
+            dt = now_time - self.last_slam_time
+            if dt >= 0.5:  # 半秒以上才檢查，避免過於頻繁
+                dx = robot_x - self.last_slam_pose['x']
+                dy = robot_y - self.last_slam_pose['y']
+                dist = math.hypot(dx, dy)
+                if dist > 0.2:  # 超過 20 公分視為跳變
+                    # 【軟化反應】：標記 SLAM 不穩定，暫停衰減而非立即停止
+                    self.get_logger().warn(f"Anti-Jump: SLAM 跳變 {dist:.2f} m，暫停衰減等待恢復")
+                    self.slam_unstable = True
+                    self.slam_recovery_time = now_time
+                else:
+                    # 如果穩定 0.3 秒以上，取消不穩定標記
+                    if self.slam_unstable and (now_time - self.slam_recovery_time) > 0.3:
+                        self.get_logger().info("SLAM 已恢復穩定")
+                        self.slam_unstable = False
+        self.last_slam_pose = {'x': robot_x, 'y': robot_y, 'theta': robot_theta}
+        self.last_slam_time = now_time
         
         # 處理每一條掃描射線
         for i, distance in enumerate(msg.ranges):
@@ -140,7 +185,7 @@ class TrustMapSolver(Node):
                 continue
             
             # 計算射線角度（相對於機器人）
-            angle = msg.angle_min + i * msg.angle_increment
+            angle = msg.angle_min + i * msg.angle_increment + self.lidar_yaw_offset_rad
             
             # 限制最大計算距離（優化性能）
             calc_distance = min(distance, self.raycast_max_range)
@@ -169,115 +214,77 @@ class TrustMapSolver(Node):
                 free_global_y = robot_y + interp_local_x * math.sin(robot_theta) + interp_local_y * math.cos(robot_theta)
                 free_points.append((free_global_x, free_global_y))
         
-        # 更新地圖
-        self.update_map(hit_points, free_points, current_time)
-        
-        # 清理過期數據（未掃描到超過 disappear_time 的格子）
-        self.cleanup_old_cells(current_time)
-        
-        # 按照時間限制發佈
+        # 只發佈當前掃描結果，不累積歷史
         if current_time - self.last_publish_time >= self.publish_interval:
-            self.publish_map()
+            cell_map = {}
+            for px, py in hit_points:
+                key = (int(round(px / self.grid_size)), int(round(py / self.grid_size)))
+                cell_map[key] = {'x': key[0], 'y': key[1], 's': self.trust_threshold}
+            for px, py in free_points:
+                key = (int(round(px / self.grid_size)), int(round(py / self.grid_size)))
+                if key in cell_map:
+                    continue  # 命中優先
+                cell_map[key] = {'x': key[0], 'y': key[1], 's': 0}
+
+            self.publish_map(list(cell_map.values()))
             self.last_publish_time = current_time
-            active_cells = len([k for k, v in self.grid_map.items() if v['trust'] > 0])
-            self.get_logger().info(f"Map published (scan #{self.scan_count}, active cells: {active_cells})")
+            self.get_logger().info(f"Map published (scan #{self.scan_count}, cells: {len(cell_map)})")
 
-    def update_map(self, hit_points, free_points, current_time):
-        """
-        【時間衰減版】更新網格地圖的信心度
-        
-        核心邏輯：
-        1. 牆體（命中點）→ 增加信任值 + 更新時間戳
-        2. 空氣（自由空間）→ 設為 0 + 更新時間戳
-        3. 未掃描到的格子 → 由 cleanup_old_cells 處理
-        """
-        # 1. 處理牆壁 (命中點)
-        for px, py in hit_points:
-            key = (int(round(px / self.grid_size)), int(round(py / self.grid_size)))
-            
-            if key not in self.grid_map:
-                self.grid_map[key] = {'trust': 0, 'last_seen': current_time}
-            
-            # 增加信任值（重複掃描累積）
-            old_trust = self.grid_map[key]['trust']
-            new_trust = min(old_trust + self.trust_increase_rate, self.trust_max)
-            self.grid_map[key] = {'trust': new_trust, 'last_seen': current_time}
-            
-            # 記錄當前掃描範圍
-            self.current_scan_cells.add(key)
-
-        # 2. 處理空氣 (自由空間)
-        for px, py in free_points:
-            key = (int(round(px / self.grid_size)), int(round(py / self.grid_size)))
-            
-            # 記錄當前掃描範圍
-            self.current_scan_cells.add(key)
-            
-            # 空氣區域設為 0（白色）
-            self.grid_map[key] = {'trust': 0, 'last_seen': current_time}
-    
-    def cleanup_old_cells(self, current_time):
-        """
-        清理過期數據
-        
-        規則：
-        - 未掃描到超過 disappear_time (1-2秒) 的格子 → 移除
-        - 確保地圖保持動態更新
-        """
-        keys_to_remove = []
-        
-        for key, data in self.grid_map.items():
-            time_since_seen = current_time - data['last_seen']
-            
-            # 超過消失時間且不在當前掃描範圍 → 移除
-            if time_since_seen > self.disappear_time and key not in self.current_scan_cells:
-                keys_to_remove.append(key)
-        
-        # 刪除過期格子
-        for key in keys_to_remove:
-            del self.grid_map[key]
-
-    def publish_map(self):
-        """
-        【時間衰減版】發佈地圖數據到網頁
-        
-        輸出格式:
-        {
-            "robot": {"x": 0.0, "y": 0.0, "theta": 0.0},
-            "map": [
-                {"x": -5, "y": -8, "s": 4},  // s: score (信心度)
-                {"x": -5, "y": -7, "s": 0},
-                ...
-            ]
-        }
-        
-        顏色映射：
-        - s >= 4: 黑色（確認牆體，需要 4-5 秒掃描）
-        - s = 0: 白色（空氣）
-        - 其他: 灰色（未知/偵測範圍外）
-        """
-        # 打包資料
-        output_list = []
-        
-        for key, data in self.grid_map.items():
-            trust = data['trust']
-            
-            # 牆體 (信心度 >= 閾值) - 黑色
-            if trust >= self.trust_threshold:
-                output_list.append({'x': key[0], 'y': key[1], 's': int(trust)})
-            # 空氣 (信心度 = 0) - 白色
-            elif trust == 0:
-                output_list.append({'x': key[0], 'y': key[1], 's': 0})
-        
-        # 組合 JSON 消息
+    def publish_map(self, map_cells):
+        """發佈當前掃描結果（不累積歷史）。"""
         payload = {
             'robot': self.robot_pose,
-            'map': output_list
+            'map': map_cells
         }
-        
+
         msg = String()
         msg.data = json.dumps(payload)
         self.map_pub.publish(msg)
+
+    # =========================
+    # 里程計訂閱與一致性檢查
+    # =========================
+    def odom_callback(self, msg: Twist):
+        now_time = time.time()
+        odom_pose = {
+            'x': msg.linear.x,
+            'y': msg.linear.y,
+            'theta': msg.angular.z
+        }
+
+        if self.last_odom_pose is not None and self.last_odom_time is not None:
+            dt = max(1e-6, now_time - self.last_odom_time)
+            odom_dx = odom_pose['x'] - self.last_odom_pose['x']
+            odom_dy = odom_pose['y'] - self.last_odom_pose['y']
+            odom_dist = math.hypot(odom_dx, odom_dy)
+
+            slam_dist = 0.0
+            if self.last_slam_pose is not None:
+                slam_dx = self.robot_pose['x'] - self.last_slam_pose['x']
+                slam_dy = self.robot_pose['y'] - self.last_slam_pose['y']
+                slam_dist = math.hypot(slam_dx, slam_dy)
+
+            # --- B. 里程計與 SLAM 差值比對 ---
+            if odom_dist >= 0.10 and slam_dist <= 0.02:
+                # 打滑或硬體異常
+                if now_time - self.last_alert_time > 2.0:  # 避免刷屏
+                    self.last_alert_time = now_time
+                    self.get_logger().error(
+                        f"ConsistencyCheck: Odom移動 {odom_dist:.2f} m，但 SLAM {slam_dist:.2f} m，判定打滑/硬體異常，任務中斷"
+                    )
+                    self.publish_stop(reason="odom_slam_mismatch")
+
+        self.last_odom_pose = odom_pose
+        self.last_odom_time = now_time
+
+    # =========================
+    # 共用：發送停止指令
+    # =========================
+    def publish_stop(self, reason: str = ""):
+        msg = String()
+        msg.data = 'STOP'
+        self.manual_control_pub.publish(msg)
+        self.get_logger().warn(f"發布 STOP 指令 (reason={reason})")
 
 
 def main(args=None):
