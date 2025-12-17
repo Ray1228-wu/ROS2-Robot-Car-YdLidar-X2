@@ -1,0 +1,26 @@
+ydlidar_ros2_driver_node:
+  ros__parameters:
+    # X2 安定配置：115200 baud, 單通道，三角測距，5~7 Hz 掃描
+    port: /dev/ttyUSB0
+    frame_id: laser_frame
+    ignore_array: ""
+    baudrate: 115200           # X2 必須 115200
+    lidar_type: 1              # 1: 三角測距 (X2)
+    device_type: 0             # 0: 串列裝置
+    isSingleChannel: true      # X2 單通道
+    intensity: false           # X2 無強度
+    intensity_bit: 0
+    sample_rate: 3             # X2 常用 3 或 4
+    abnormal_check_count: 4
+    fixed_resolution: true      # 參數名為 fixed_resolution（非 resolution_fixed）
+    reversion: false
+    inverted: true             # 若地圖反轉可改 false
+    auto_reconnect: true
+    support_motor_dtr: true    # USB DTR 控馬達
+    angle_max: 180.0
+    angle_min: -180.0
+    range_max: 12.0
+    range_min: 0.1
+    frequency: 5.5             # 掃描頻率 5~7 Hz
+    invalid_range_is_inf: false
+    debug: false

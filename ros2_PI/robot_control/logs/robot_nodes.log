@@ -1,0 +1,308 @@
+
+============================================================
+Control nodes start 2025-12-16 03:18:57
+============================================================
+
+============================================================
+Control nodes start 2025-12-16 03:21:47
+============================================================
+[導航邏輯] [37;1m2025-12-16 03:21:49.032 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.035 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.037 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.038 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.041 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.045 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:21:49.046 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.869 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.872 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.873 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.875 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.879 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:21:50.883 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765855311.070729120] [pi_navigation_logic]: 導航邏輯節點啟動
+[馬達驅動] [37;1m2025-12-16 03:21:51.417 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.591 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.592 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.594 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.606 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.610 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:21:51.611 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+
+============================================================
+Control nodes start 2025-12-16 03:27:59
+============================================================
+[導航邏輯] [37;1m2025-12-16 03:28:00.747 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.749 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.751 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.752 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.756 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.759 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.768 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:28:00.776 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14939: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.759 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.762 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.763 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.764 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.791 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.794 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:28:01.797 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765855681.990836958] [pi_navigation_logic]: 導航邏輯節點啟動
+[馬達驅動] [37;1m2025-12-16 03:28:03.023 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.026 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.028 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.029 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.033 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.036 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.037 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:28:03.044 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14939: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+
+============================================================
+Control nodes start 2025-12-16 03:31:20
+============================================================
+[導航邏輯] [37;1m2025-12-16 03:31:22.061 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.065 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.066 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.068 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.073 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.077 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.079 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.082 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14939: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 03:31:22.084 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14943: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765855883.348526130] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 03:31:23.517 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.526 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.527 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.529 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.533 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.537 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.539 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.545 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14939: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 03:31:23.550 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14943: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.074 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.076 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.078 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.079 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.083 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14925: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.086 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.088 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14933: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.091 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14939: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 03:31:24.093 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14943: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765855884.729636871] [pi_encoder_reader]: 編碼器讀取節點啟動
+[編碼器讀取] Traceback (most recent call last):
+[編碼器讀取]   File "/home/ray/ros2_ws/robot_control/encoder_reader.py", line 127, in <module>
+
+============================================================
+Control nodes start 2025-12-16 05:47:33
+============================================================
+
+============================================================
+Control nodes start 2025-12-16 05:47:45
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:47:46.706 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864067.175671878] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:47:47.679 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864068.514544862] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [37;1m2025-12-16 05:47:48.590 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] Traceback (most recent call last):
+[編碼器讀取]   File "/home/ray/ros2_ws/robot_control/encoder_reader.py", line 127, in <module>
+[編碼器讀取]     main()
+[編碼器讀取]   File "/home/ray/ros2_ws/robot_control/encoder_reader.py", line 118, in main
+[編碼器讀取]     rclpy.spin(node)
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 229, in spin
+[編碼器讀取]     executor.spin_once()
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 751, in spin_once
+[編碼器讀取]     self._spin_once_impl(timeout_sec)
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 748, in _spin_once_impl
+[編碼器讀取]     raise handler.exception()
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/task.py", line 254, in __call__
+[編碼器讀取]     self._handler.send(None)
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 447, in handler
+[編碼器讀取]     await call_coroutine(entity, arg)
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 361, in _execute_timer
+[編碼器讀取]     await await_or_execute(tmr.callback)
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/executors.py", line 107, in await_or_execute
+[編碼器讀取]     return callback(*args)
+[編碼器讀取]   File "/home/ray/ros2_ws/robot_control/encoder_reader.py", line 95, in publish_odometry
+[編碼器讀取]     odom.header.stamp = current_time
+[編碼器讀取]   File "/opt/ros/humble/local/lib/python3.10/dist-packages/std_msgs/msg/_header.py", line 133, in stamp
+[編碼器讀取]     assert \
+[編碼器讀取] AssertionError: The 'stamp' field must be a sub message of type 'Time'
+[馬達驅動] [INFO] [1765864069.228654717] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 05:48:43
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:48:45.027 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:48:45.030 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864125.379698983] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:48:45.887 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:48:46.042 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:48:46.701 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:48:46.707 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864127.760500263] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765864127.857283932] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 05:49:34
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:49:35.449 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:49:35.451 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:49:35.455 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864176.051254580] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:49:36.848 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:49:36.851 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:49:36.854 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:49:37.589 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:49:37.592 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:49:37.593 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864177.738714681] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765864177.972490208] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 05:53:02
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:53:03.897 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:53:03.899 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:53:03.901 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:53:03.903 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864385.125105855] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:53:05.343 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:53:05.346 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:53:05.347 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:53:05.350 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864386.136511852] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [37;1m2025-12-16 05:53:06.306 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:53:06.309 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:53:06.310 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:53:06.312 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [INFO] [1765864387.132675569] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 05:55:35
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:55:36.862 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:55:36.864 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:55:36.865 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:55:36.867 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:55:36.870 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864537.824298348] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:55:38.086 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:55:38.089 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:55:38.091 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:55:38.100 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:55:38.106 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:55:38.894 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:55:38.896 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:55:38.900 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:55:38.903 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:55:38.908 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864539.147471846] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765864539.396382571] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 05:57:31
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:57:32.622 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:57:32.625 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:57:32.626 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:57:32.628 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:57:32.631 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:57:32.633 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864653.725032680] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:57:34.189 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:57:34.192 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:57:34.193 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:57:34.196 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:57:34.199 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:57:34.202 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:34.859 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:34.861 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:34.862 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:35.017 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:35.026 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:57:35.032 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864655.166882276] [pi_encoder_reader]: 編碼器讀取節點啟動
+
+============================================================
+Control nodes start 2025-12-16 05:58:30
+============================================================
+[導航邏輯] [37;1m2025-12-16 05:58:32.099 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.103 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.106 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.109 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.114 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.118 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 05:58:32.122 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14935: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765864712.573242781] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 05:58:32.791 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.794 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.795 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.797 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.835 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.850 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 05:58:32.856 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14935: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.715 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.718 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.721 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14917: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.729 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.733 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14927: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.735 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14931: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 05:58:33.738 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14935: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765864714.264836134] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765864714.300125836] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 06:52:33
+============================================================
+[導航邏輯] [INFO] [1765867956.136150189] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [INFO] [1765867956.543080774] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765867956.947408632] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 07:02:37
+============================================================
+[導航邏輯] [37;1m2025-12-16 07:02:38.540 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765868558.858667520] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 07:02:39.384 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765868560.094002596] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [37;1m2025-12-16 07:02:40.304 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [INFO] [1765868560.604423941] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 07:12:57
+============================================================
+[導航邏輯] [37;1m2025-12-16 07:12:58.694 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 07:12:58.696 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765869178.965778620] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 07:12:59.517 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 07:12:59.520 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765869180.131444182] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [37;1m2025-12-16 07:13:00.412 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 07:13:00.414 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [INFO] [1765869180.705734648] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 07:14:25
+============================================================
+[導航邏輯] [37;1m2025-12-16 07:14:26.953 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 07:14:26.955 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 07:14:26.957 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [37;1m2025-12-16 07:14:26.958 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[導航邏輯] [INFO] [1765869267.333590452] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [37;1m2025-12-16 07:14:28.211 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 07:14:28.213 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 07:14:28.219 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [37;1m2025-12-16 07:14:28.220 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 07:14:28.771 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14911: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 07:14:28.773 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14915: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 07:14:28.774 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14919: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[馬達驅動] [37;1m2025-12-16 07:14:28.775 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port14921: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[編碼器讀取] [INFO] [1765869268.817768902] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765869269.312505548] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
+
+============================================================
+Control nodes start 2025-12-16 07:49:04
+============================================================
+[導航邏輯] [INFO] [1765871346.893971640] [pi_navigation_logic]: 導航邏輯節點啟動
+[編碼器讀取] [INFO] [1765871347.338488459] [pi_encoder_reader]: 編碼器讀取節點啟動
+[馬達驅動] [INFO] [1765871347.724563917] [pi_motor_driver]: 馬達驅動節點啟動，訂閱 /cmd_vel
