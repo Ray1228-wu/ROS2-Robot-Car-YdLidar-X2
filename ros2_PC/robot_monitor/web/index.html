@@ -9,13 +9,80 @@
 <body>
 
     <div id="info-panel">
-        <div>X 軸距離: <span id="dist-x">0.00</span> m</div>
-        <div>Y 軸距離: <span id="dist-y">0.00</span> m</div>
-        <div>朝向角度: <span id="robot-theta">0.0</span>°</div>
-        <div class="status">狀態: 等待連線...</div>
+        <div class="status" id="ros-status">狀態: 等待連線...</div>
+    </div>
+
+    <!-- 說明按鈕（右上角） -->
+    <button id="help-btn" class="help-btn">?</button>
+
+    <!-- 說明對話框 -->
+    <div id="help-modal" class="help-modal hidden">
+        <div class="help-content">
+            <button id="help-close" class="help-close">&times;</button>
+            <h2>操作說明</h2>
+            <div class="help-section">
+                <h3>🖱️ 滑鼠操作</h3>
+                <ul>
+                    <li><strong>左鍵拖曳</strong>：移動地圖視野</li>
+                    <li><strong>滾輪</strong>：縮放地圖</li>
+                    <li><strong>右鍵點擊</strong>：設置導航目標（出現「前往」泡泡）</li>
+                </ul>
+            </div>
+            <div class="help-section">
+                <h3>🎯 導航指派 (算法未完善)</h3>
+                <ul>
+                    <li>右鍵點擊地圖上的位置</li>
+                    <li>點擊出現的「前往」泡泡確認導航</li>
+                    <li>導航時可按暫停/取消按鈕控制</li>
+                </ul>
+            </div>
+            <div class="help-section">
+                <h3>🎮 手動模式</h3>
+                <ul>
+                    <li>底部按鈕切換模式（事件驅動）：發布 <code>/motor_mode='toggle'</code></li>
+                    <li>進入手動後才會連續發布 <code>/manual_control</code>（10 Hz）</li>
+                    <li>按住：<strong>W</strong> 前進、<strong>S</strong> 後退、<strong>A</strong> 左轉、<strong>D</strong> 右轉</li>
+                    <li>放開或視窗失焦：立即發布一次 <code>STOP</code></li>
+                </ul>
+            </div>
+            <div class="help-section">
+                <h3>🧭 方位校正</h3>
+                <ul>
+                    <li>左下角羅盤：按住拖曳紅色指針調整偏角（上方=車頭正前）</li>
+                    <li>按「重置」回到 0°，設定會自動保存（瀏覽器）</li>
+                    <li>也可用網址參數覆蓋：<code>?yaw=-120</code></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <canvas id="mapCanvas"></canvas>
+
+    <!-- LiDAR 角度校正面板（左下角，拖曳羅盤指針） -->
+    <div id="calib-panel" class="calib-panel">
+        <div class="calib-title">方位校正（上方=正前）</div>
+        <canvas id="yaw-compass" width="120" height="120"></canvas>
+        <div class="calib-row"><span class="label">偏角</span><span id="yaw-display" class="yaw-display">0°</span></div>
+        <div class="calib-row">
+            <button id="yaw-reset" class="calib-btn reset">重置</button>
+        </div>
+    </div>
+
+    <!-- 手動模式切換按鈕（底部正中央） -->
+    <button id="manual-toggle" class="manual-toggle">手動模式</button>
+
+    <!-- 手動模式鍵盤面板 -->
+    <div id="manual-panel" class="manual-panel hidden">
+        <div class="manual-header">WASD + Space（長按觸發）</div>
+        <div class="kbd-row">
+            <div class="key key-w">W</div>
+        </div>
+        <div class="kbd-row">
+            <div class="key key-a">A</div>
+            <div class="key key-s">S</div>
+            <div class="key key-d">D</div>
+        </div>
+    </div>
 
     <div id="nav-bubble" class="hidden">
         <span id="nav-text">前往</span>

@@ -17,6 +17,219 @@ body, html {
     cursor: default; 
 }
 
+/* 說明按鈕（右上角） */
+.help-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e88e5, #42a5f5);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    z-index: 260;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.help-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+}
+
+.help-btn:active {
+    transform: scale(0.95);
+}
+
+/* 說明對話框背景 */
+.help-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    animation: fadeInBackdrop 0.2s ease-out;
+}
+
+@keyframes fadeInBackdrop {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 說明內容框 */
+.help-content {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.help-content h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #1e88e5;
+    font-size: 20px;
+}
+
+.help-section {
+    margin-bottom: 16px;
+}
+
+.help-section h3 {
+    margin: 10px 0;
+    color: #2196f3;
+    font-size: 14px;
+}
+
+.help-section ul {
+    margin: 8px 0;
+    padding-left: 20px;
+    list-style: none;
+}
+
+.help-section li {
+    margin: 6px 0;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.help-section strong {
+    color: #1e88e5;
+}
+
+/* 關閉按鈕 */
+.help-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.help-close:hover {
+    color: #333;
+}
+
+/* 手動模式切換按鈕（底部正中央） */
+.manual-toggle {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1e88e5, #42a5f5);
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    z-index: 250;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.manual-toggle.active {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+}
+
+.manual-toggle:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+}
+
+.manual-toggle:active {
+    transform: translateX(-50%) translateY(0px);
+}
+
+/* 手動模式鍵盤面板 */
+.manual-panel {
+    position: fixed;
+    bottom: 78px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    z-index: 240;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 220px;
+    align-items: center;
+    animation: fadeUp 0.2s ease-out;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translate(-50%, 12px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.manual-header {
+    font-size: 12px;
+    color: #9bd0ff;
+    letter-spacing: 0.5px;
+}
+
+.kbd-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
+.key {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    min-width: 54px;
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 12px rgba(0,0,0,0.4);
+    transition: all 0.1s ease;
+    font-weight: bold;
+}
+
+.key-space {
+    min-width: 180px;
+}
+
+.key.active {
+    background: #1e88e5;
+    border-color: #64b5f6;
+    box-shadow: 0 0 14px rgba(66,165,245,0.8);
+}
+
 /* 左上角資訊面板 */
 #info-panel {
     position: absolute;
@@ -63,6 +276,54 @@ body, html {
 #scale-text {
     color: black;
     font-size: 12px;
+}
+
+/* LiDAR 角度校正面板 */
+.calib-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #333;
+    padding: 10px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 12;
+    font-size: 12px;
+}
+.calib-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.calib-row { display:flex; align-items:center; gap:8px; margin-top:6px; }
+.calib-btn {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.calib-btn:hover {
+    background: #eee;
+}
+.calib-btn.reset {
+    color: #b71c1c;
+    border-color: #ef9a9a;
+    background: #ffebee;
+}
+.yaw-display {
+    min-width: 54px;
+    text-align: center;
+    font-weight: 600;
+}
+
+#yaw-compass {
+    display: block;
+    width: 120px;
+    height: 120px;
+    background: rgba(250,250,250,0.9);
+    border-radius: 8px;
 }
 
 /* 導航對話泡泡 (重要互動元件) */
@@ -113,7 +374,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 200;
+    z-index: 260;
     animation: slideUp 0.3s ease-out;
 }
 
