@@ -25,6 +25,11 @@ class ManualMotorDriver(Node):
         self.MIN_PWM = 0.35  # 最低啟動 PWM
         self.TURN_PWM = 0.7  # 轉向時的 PWM
         self.FORWARD_PWM = 0.8  # 前進時的 PWM
+
+        # 指令超時設定：按鍵鬆開後前端會送 STOP/空字串，但若通訊中斷，超時自動停車
+        self.CMD_TIMEOUT = 0.5  # 秒
+        self._last_cmd_time = self.get_clock().now()
+        self._is_running = False
         
         # --- GPIO 初始化 ---
         # 左輪：Pin 18 (PWM), Pin 14 (forward), Pin 15 (backward)
@@ -38,6 +43,9 @@ class ManualMotorDriver(Node):
         # --- ROS 訂閱 ---
         self.sub_manual = self.create_subscription(
             String, '/manual_control', self.manual_control_callback, 10)
+
+        # 週期檢查超時，沒有指令就自動停車
+        self.timer = self.create_timer(0.1, self._timeout_watchdog)
         
         self.get_logger().info('🎮 手動控制馬達驅動節點啟動')
         self.get_logger().info('   訂閱主題: /manual_control')
@@ -46,8 +54,10 @@ class ManualMotorDriver(Node):
     def manual_control_callback(self, msg):
         """處理手動控制指令"""
         command = msg.data.strip().upper()
+        self._last_cmd_time = self.get_clock().now()
         
-        if not command:
+        # 空指令或 STOP 代表鬆開所有按鍵，立即停車
+        if not command or command == 'STOP':
             self._stop_motors()
             return
         
@@ -64,6 +74,17 @@ class ManualMotorDriver(Node):
             self._turn_right()
         else:  # 空格或其他
             self._stop_motors()
+
+    def _timeout_watchdog(self):
+        """若超過 CMD_TIMEOUT 沒收到指令，自動停車"""
+        now = self.get_clock().now()
+        if (now - self._last_cmd_time).nanoseconds > self.CMD_TIMEOUT * 1e9:
+            if self._is_running:
+                self._stop_motors()
+                self._is_running = False
+        else:
+            # 有指令時標記為運行狀態
+            self._is_running = True
 
     def _move_forward(self):
         """前進：左右輪同向前進"""
