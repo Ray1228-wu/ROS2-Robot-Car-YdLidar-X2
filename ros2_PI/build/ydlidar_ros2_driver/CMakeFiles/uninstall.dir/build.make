@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ray/ros2_ws/src/ydlidar_ros2_driver
+CMAKE_SOURCE_DIR = /home/ray/ros2_ws/ros2_PI/src/ydlidar_ros2_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ray/ros2_ws/build/ydlidar_ros2_driver
+CMAKE_BINARY_DIR = /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/ray/ros2_ws/build/ydlidar_ros2_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ray/ros2_ws/src/ydlidar_ros2_driver /home/ray/ros2_ws/src/ydlidar_ros2_driver /home/ray/ros2_ws/build/ydlidar_ros2_driver /home/ray/ros2_ws/build/ydlidar_ros2_driver /home/ray/ros2_ws/build/ydlidar_ros2_driver/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ray/ros2_ws/ros2_PI/src/ydlidar_ros2_driver /home/ray/ros2_ws/ros2_PI/src/ydlidar_ros2_driver /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

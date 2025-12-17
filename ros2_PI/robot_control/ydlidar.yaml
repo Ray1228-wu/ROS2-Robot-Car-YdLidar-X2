@@ -14,13 +14,13 @@ ydlidar_ros2_driver_node:
     abnormal_check_count: 4
     fixed_resolution: true      # 參數名為 fixed_resolution（非 resolution_fixed）
     reversion: false
-    inverted: true             # 若地圖反轉可改 false
+    inverted: false             # 若地圖反轉可改 false
     auto_reconnect: true
     support_motor_dtr: true    # USB DTR 控馬達
     angle_max: 180.0
     angle_min: -180.0
     range_max: 12.0
     range_min: 0.1
-    frequency: 5.5             # 掃描頻率 5~7 Hz
+    frequency: 5.0             # 掃描頻率 5 Hz
     invalid_range_is_inf: false
     debug: false

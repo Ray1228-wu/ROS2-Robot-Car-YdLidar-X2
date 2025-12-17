@@ -144,9 +144,19 @@ class SafetyController(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = SafetyController()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info("安全控制器中斷，停止馬達")
+    except Exception as e:
+        node.get_logger().error(f"安全控制器異常: {e}，停止馬達")
+    finally:
+        # 確保馬達停止
+        stop_cmd = Twist()
+        node.pub_cmd_vel.publish(stop_cmd)
+        node.get_logger().info("已發送馬達停止指令")
+        node.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

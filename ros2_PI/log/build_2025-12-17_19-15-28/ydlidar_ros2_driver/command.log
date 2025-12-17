@@ -1,0 +1,6 @@
+Invoking command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ray/ros2_ws/ros2_PI/src/ydlidar_ros2_driver -DCMAKE_INSTALL_PREFIX=/home/ray/ros2_ws/ros2_PI/install/ydlidar_ros2_driver
+Invoked command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ray/ros2_ws/ros2_PI/src/ydlidar_ros2_driver -DCMAKE_INSTALL_PREFIX=/home/ray/ros2_ws/ros2_PI/install/ydlidar_ros2_driver
+Invoking command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver -- -j4 -l4
+Invoked command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver -- -j4 -l4
+Invoking command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver
+Invoked command in '/home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ray/ros2_ws/ros2_PI/build/ydlidar_ros2_driver
