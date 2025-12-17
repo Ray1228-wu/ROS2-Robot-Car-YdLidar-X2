@@ -1,264 +1,83 @@
-#!/bin/bash
-# 導航系統快速啟動指南
-# Robot Monitor Navigation System Quick Start
+# 🤖 機器人導航系統 — 快速啟動指南
+Robot Monitor Navigation System – Quick Start
 
-cat << 'EOF'
+---
 
-================================================================================
-                    【機器人導航系統 - 快速啟動】
-================================================================================
+## 🚀 步驟 1：啟動 ROS 2 系統（WSL 終端）
 
-【步驟 1】啟動 ROS 2 系統 (在 WSL 終端)
-─────────────────────────────────────────
+```bash
+cd ros2_PC/          # 進入工作區目錄
+python3 start_all.py # 使用相對路徑自動啟動
+```
 
-$ cd ros2_PC/              # 進入工作區目錄
-$ python3 start_all.py     # 自動使用相對路徑啟動
+> 💡 **相對路徑優點**  
+> 複製整個資料夾到任何位置都能直接執行  
+> 無需修改 `/home/ray/ros2_PC`
 
-💡 相對路徑優點: 複製整個資料夾到任何位置都能直接執行！
-   無需修改絕對路徑 /home/ray/ros2_PC
+### 預期輸出
 
-預期輸出:
-  ✓ rosbridge_websocket running (port 9090)
-  ✓ throttle node running (0.8 Hz)
-  ✓ SLAM running
-  ✓ trust_map_solver running
-  ✓ HTTP server running (port 8000)
+- ✅ rosbridge_websocket running (port 9090)
+- ✅ throttle node running (0.8 Hz)
+- ✅ SLAM running
+- ✅ trust_map_solver running
+- ✅ HTTP server running (port 8000)
 
-【步驟 2】開啟網頁 (在任何瀏覽器)
-─────────────────────────────────────────
+---
 
+## 🌐 步驟 2：開啟網頁（任何瀏覽器）
+
+```
 http://localhost:8000
+```
 
-✓ 應看到實時 SLAM 地圖和機器人箭頭
+✔ 應看到 **即時 SLAM 地圖** 與 **機器人箭頭**
 
-【步驟 3】測試導航功能 (兩種模式)
-─────────────────────────────────────────
+---
 
-╔════════════════════════════════════════╗
-║  模式 A: 自動導航 (右鍵點擊)            ║
-╚════════════════════════════════════════╝
+## 🧭 步驟 3：測試導航功能
 
-1. 右鍵點擊地圖上的任意位置
-   → 「前往」泡泡出現在滑鼠位置
+### 🅰 模式 A：自動導航（右鍵點擊）
 
-2. 點擊泡泡
-   → 導航欄從底部滑出 ⬇️
-   → 按鈕: ⏸ 暫停 (橙色) | ✕ 取消 (紅色)
-   → 發送 /nav_goal 到 PI
+1. **右鍵點擊地圖**
+   - 出現「前往」泡泡
 
-3. 點擊【暫停】
-   → 按鈕變綠色，文字變「▶ 繼續」
-   → 發送 PAUSE 到 /motor_control
+2. **點擊泡泡**
+   - 導航欄由底部滑出
+   - 按鈕：⏸ 暫停（橙）｜✕ 取消（紅）
+   - 發送 `/nav_goal` 到 PI
 
-4. 點擊【繼續】
-   → 按鈕變橙色，文字變「⏸ 暫停」
-   → 發送 RESUME 到 /motor_control
+3. **暫停**
+   - 發送 `PAUSE` → `/motor_control`
 
-5. 點擊【取消】
-   → 導航欄隱藏
-   → 發送 CANCEL 到 /motor_control
+4. **繼續**
+   - 發送 `RESUME` → `/motor_control`
 
-╔════════════════════════════════════════╗
-║  模式 B: 手動控制 (鍵盤 WASD)           ║
-╚════════════════════════════════════════╝
+5. **取消**
+   - 發送 `CANCEL` → `/motor_control`
 
-在地圖上按下以下按鍵 (焦點需要在頁面內):
+---
 
-  W ..................... 前進 (FORWARD|0.3 m/s)
-  S ..................... 後退 (BACKWARD|0.3 m/s)
-  A ..................... 左轉 (LEFT|0.3 rad/s)
-  D ..................... 右轉 (RIGHT|0.3 rad/s)
-  Space ................. 暫停 (MANUAL_PAUSE)
-  鬆開 WASD ............. 停止 (STOP)
+### 🅱 模式 B：手動控制（鍵盤 WASD）
 
-💡 手動控制發佈到 /manual_control topic
-   與導航控制 (/motor_control) 獨立運行
+> 頁面需取得焦點
 
-⚡ 指令格式 (發送到 PI 的馬達控制節點):
-   FORWARD|0.3   - 前進，速度 0.3 m/s
-   LEFT|0.3      - 左轉，角速度 0.3 rad/s
-   STOP          - 立即停止
+| 鍵盤 | 動作 |
+|----|----|
+| W | 前進（0.3 m/s） |
+| S | 後退 |
+| A | 左轉（0.3 rad/s） |
+| D | 右轉 |
+| Space | 暫停 |
+| 放開 WASD | 停止 |
 
-【步驟 4】驗證路徑記憶（可選）
-─────────────────────────────────────────
+📤 發佈到 `/manual_control`（與導航獨立）
 
-在另一個終端執行監控命令:
-$ ros2 topic echo /viz_map_data
+```text
+FORWARD|0.3
+LEFT|0.3
+STOP
+```
 
-觀察輸出中的 "walls: X" 數字，應該逐漸增加
-表示歷史牆體被永久保存
+---
 
-================================================================================
-
-【系統組件清單】
-
-✅ 已完成 (WSL 端):
-  ├─ Web UI (index.html)
-  │  ├─ 地圖畫布 (Canvas)
-  │  ├─ 編碼器面板 (右上)
-  │  ├─ 導航控制欄 (底部)
-  │  └─ 暫停/繼續/取消按鈕
-  │
-  ├─ JavaScript 邏輯 (map_viewer.js)
-  │  ├─ ROS 話題發佈
-  │  │  ├─ /nav_goal (geometry_msgs/PoseStamped) - 自動導航
-  │  │  ├─ /motor_control (std_msgs/String) - 導航控制
-  │  │  └─ /manual_control (std_msgs/String) - 手動操控 ✨ 新
-  │  ├─ ROS 話題訂閱 (/encoder_state, /robot_status)
-  │  ├─ 導航狀態管理 (navigationActive, motorPaused)
-  │  ├─ 按鈕事件處理 (暫停/繼續/取消)
-  │  ├─ 鍵盤事件處理 (WASD + Space) ✨ 新
-  │  └─ 手動控制發送邏輯
-  │
-  ├─ 路徑記憶 (trust_map_solver.py)
-  │  ├─ historical_walls 數據結構
-  │  ├─ 掃描到的牆體永久保存
-  │  └─ 發佈包含歷史數據的地圖
-  │
-  ├─ 系統啟動 (start_all.py) ✨ 已更新
-  │  ├─ ROS_DOMAIN_ID=30 設定
-  │  ├─ 相對路徑自動解析 (工作區可移動!)
-  │  ├─ 所有服務自動啟動
-  │  └─ 正確的環境變數傳遞
-  │
-  └─ 測試工具 (test_navigation.py)
-     ├─ 監聽 /nav_goal
-     ├─ 監聽 /motor_control
-     ├─ 發佈 /encoder_state (模擬)
-     └─ 發佈 /robot_status (模擬)
-
-⏳ 待實現 (PI 端 - 不在 WSL):
-  ├─ 馬達驅動 (GPIO 控制)
-  ├─ 編碼器讀取 (光學脈衝)
-  ├─ 导航算法實現
-  └─ 參考範本: pi_motor_controller_template.py
-
-================================================================================
-
-【檔案映射】
-
-index.html
-  └─ 包含: nav-bar, encoder-panel, 暫停/取消按鈕
-
-style.css
-  ├─ #nav-bar - 底部控制欄
-  ├─ #encoder-panel - 右上編碼器顯示
-  ├─ .pause-btn - 暫停按鈕 (動態類: .resumed)
-  └─ 動畫: slideUp (0.3s)
-
-map_viewer.js
-  ├─ navigationActive - 導航進行中標誌
-  ├─ motorPaused - 馬達暫停標誌
-  ├─ encoderData - 編碼器數據
-  ├─ navGoalPublisher - 發佈導航目標
-  ├─ motorControlPublisher - 發佈馬達命令
-  ├─ showNavigationBar() - 顯示底部欄
-  ├─ updatePauseButtonState() - 更新按鈕外觀
-  ├─ 泡泡點擊: 發送 /nav_goal
-  ├─ 暫停按鈕: 發送 PAUSE/RESUME 到 /motor_control
-  └─ 取消按鈕: 發送 CANCEL 到 /motor_control
-
-trust_map_solver.py
-  ├─ historical_walls{} - 永久牆體記錄
-  ├─ current_scan_cells{} - 當前掃描範圍
-  ├─ update_map() - 標記命中點到歷史記錄
-  └─ publish_map() - 優先發佈歷史數據
-
-start_all.py
-  ├─ ROS_DOMAIN_ID=30 設定
-  ├─ rosbridge_websocket 啟動
-  ├─ throttle 獨立啟動
-  ├─ pc_monitor_launch (SLAM)
-  ├─ trust_map_solver
-  └─ HTTP server (port 8000)
-
-================================================================================
-
-【故障排除】
-
-Q: 導航欄不顯示？
-A: 1. 檢查 console 是否有 JS 錯誤 (F12)
-   2. 確認 index.html 有 id="nav-bar" 元素
-   3. 確認 map_viewer.js 已加載
-
-Q: 編碼器數據不更新？
-A: 1. PI 是否發佈了 /encoder_state?
-   2. ROS_DOMAIN_ID 是否都設為 30?
-   3. 終端確認: ros2 topic echo /encoder_state
-
-Q: 路徑不保存？
-A: 1. 檢查 trust_map_solver.py 是否有 historical_walls
-   2. 重啟 start_all.py
-   3. 查看日誌中的 "walls: X" 數字是否增加
-
-Q: 手動控制 (WASD) 不工作？
-A: 1. 確認鼠標焦點在網頁內 (按 F12 看 console)
-   2. 檢查: ros2 topic echo /manual_control
-   3. 確認 PI 端訂閱了 /manual_control
-
-Q: 相對路徑不工作？
-A: 1. 確認在 ros2_PC 目錄執行 start_all.py
-   2. 檢查 install/setup.bash 是否存在
-   3. robot_monitor/web 目錄是否完整
-
-Q: 馬達控制沒反應？
-A: 1. PI 端是否訂閱了 /motor_control?
-   2. 檢查日誌: ros2 topic echo /motor_control
-   3. ROS_DOMAIN_ID 一致性檢查
-
-================================================================================
-
-【開發者文檔】
-
-詳見:
-  • CONTROL_METHODS.md ........... 詳細控制方法說明 ✨ 新
-  • NAVIGATION_GUIDE.py ......... 完整系統文檔
-  • ARCHITECTURE.txt ........... 系統架構圖
-
-參考範本 (PI 端):
-  • pi_motor_controller_template.py ... 馬達控制完整範本
-  • test_navigation.py ................ 訂閱示範程式
-
-================================================================================
-
-【關鍵 ROS 2 話題】
-
-📤 發佈 (Publish) - 從網頁發出
-
-/nav_goal (geometry_msgs/PoseStamped)
-  來源: 網頁 (右鍵點擊)
-  目標: PI 導航控制器
-  格式: {position: {x, y, z}, orientation: {x, y, z, w}}
-  目的: 自動導航到指定座標
-
-/motor_control (std_msgs/String)
-  來源: 網頁 (暫停/繼續/取消按鈕)
-  目標: PI 馬達控制器
-  格式: "PAUSE" | "RESUME" | "CANCEL"
-  目的: 控制自動導航狀態
-
-/manual_control (std_msgs/String) ✨ 新
-  來源: 網頁 (鍵盤 WASD + Space)
-  目標: PI 馬達控制器
-  格式: "FORWARD|0.3" | "LEFT|0.3" | "STOP"
-  目的: 直接控制馬達，無導航邏輯
-
-📥 訂閱 (Subscribe) - 從 PI 接收
-
-/encoder_state (geometry_msgs/Twist)
-  來源: PI 編碼器讀取器
-  消費: 網頁 (顯示位置) + PI 導航 (反饋)
-  格式: {linear: {x, y, z}, angular: {z}}
-  用途: 機器人位置反饋
-
-/robot_status (std_msgs/String)
-  來源: PI 狀態監控
-  消費: 網頁 (導航欄)
-  格式: "NAVIGATING|x|y|distance" 或 "IDLE|0|0|0"
-  用途: 機器人狀態更新
-
-================================================================================
-
-祝使用愉快！🤖
-
-EOF
+🎉 **祝使用愉快！**
