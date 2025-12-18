@@ -225,7 +225,7 @@ https://www.youtube.com/watch?v=cI1XHkzFwVI
 
 ## ROS Domain 通訊建立 (Pi & WSL)
 
-### ROS Domain 是 ROS 套件中實際跨裝置通訊的設定，讓連上同一個區域網路的裝置之間可以訂閱其他裝置發布的 Node 的特殊通道（譬如我的 Raspberry PU 今天跟我的電腦在同一個網路下，兩個裝置間只要設定好相同的 ROS Domain 就可以看的彼此發布的主題並且進行訂閱)(這個概念很類似於 IP port ，都是建立好彼此聯通的路徑並且進行資訊互通，在 ROS1 中確實是用 IP port 來實踐，自由度跟多裝置通訊的設定會比較麻煩）
+### ROS Domain 是 ROS 套件中實際跨裝置通訊的設定，讓連上同一個區域網路的裝置之間可以訂閱其他裝置發布的 Node 的特殊通道（譬如我的 Raspberry PI 今天跟我的電腦在同一個網路下，兩個裝置間只要設定好相同的 ROS Domain 就可以看的彼此發布的主題並且進行訂閱)(這個概念很類似於 IP port ，都是建立好彼此聯通的路徑並且進行資訊互通，在 ROS1 中確實是用 IP port 來實踐，自由度跟多裝置通訊的設定會比較麻煩）
 
 * **WSL 網路設定：**
     * 確保 `~/.wslconfig` 檔案中包含 `networkingMode=mirrored`。
