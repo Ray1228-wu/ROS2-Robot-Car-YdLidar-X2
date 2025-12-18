@@ -26,7 +26,7 @@
 
 ### 展示影片
 
-{%preview https://www.youtube.com/watch?v=cI1XHkzFwVI %}
+https://www.youtube.com/watch?v=cI1XHkzFwVI
 
 ----
 
