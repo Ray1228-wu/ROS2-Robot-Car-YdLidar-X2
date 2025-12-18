@@ -62,7 +62,7 @@ https://www.youtube.com/watch?v=cI1XHkzFwVI
 
 ## 軟體流程：Pi 主機環境設定 (Pre-installation - Pi)
 
-此專案選用 ROS2 Humble，所以 Pi Imager 燒錄映像檔採用 **Ubuntu 22.04 ver**。
+### 此專案選用 ROS2 Humble，所以 Pi Imager 燒錄映像檔採用 **Ubuntu 22.04 ver**。
 
 1.  確保系統是最新版本
 
@@ -167,6 +167,7 @@ https://www.youtube.com/watch?v=cI1XHkzFwVI
 
 ##  軟體流程：電腦安裝 ROS2 in WSL (Pre-installation - WSL)
 
+### 為了實踐網頁輸出地圖跟硬體控制分流（因為當初在看他人實作時有注意到 ROS 套件跟 LiDAR 維持運行就會佔據大約280%的總 CPU (印象中樹莓派4個 CPU 而已)，加上其他功能估計會到300多%，導致效能太吃緊可能會無法穩定匯出地圖，所以這邊是在將網頁點的 SLAM 建圖、rviz2 、 網頁廣播在電腦端使用，因此選擇在 WSL 系統下實作
 1.  確定 WSL 版本是 ubuntu22.04
 
     ```bash
@@ -223,6 +224,8 @@ https://www.youtube.com/watch?v=cI1XHkzFwVI
     ```
 
 ## ROS Domain 通訊建立 (Pi & WSL)
+
+### ROS Domain 是 ROS 套件中實際跨裝置通訊的設定，讓連上同一個區域網路的裝置之間可以訂閱其他裝置發布的 Node 的特殊通道（譬如我的 Raspberry PU 今天跟我的電腦在同一個網路下，兩個裝置間只要設定好相同的 ROS Domain 就可以看的彼此發布的主題並且進行訂閱)(這個概念很類似於 IP port ，都是建立好彼此聯通的路徑並且進行資訊互通，在 ROS1 中確實是用 IP port 來實踐，自由度跟多裝置通訊的設定會比較麻煩）
 
 * **WSL 網路設定：**
     * 確保 `~/.wslconfig` 檔案中包含 `networkingMode=mirrored`。
@@ -308,7 +311,7 @@ Pi上，並讓Pi可以順利收到來自encoder的邏輯電流，故將encoder�
 
 #### 2.3 透過 RViz 驗證 Pi 和 Ydlidar 建立連接 (實踐)
 
-
+### 這邊會選擇使用 RViz 是為了確保電腦端有正確訂閱到 YdLiDAR 發布的 scan node，選擇以 RViz 這個 ROS 的這個平面點圖輸出工具，也方便之後再進行參數調整或是檢驗地圖廣播的校驗工具。
 
 * **步驟 1：測試掃描功能 (Pi 端)**
 
