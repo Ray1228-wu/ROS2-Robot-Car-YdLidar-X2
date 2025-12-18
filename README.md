@@ -334,7 +334,12 @@ Pi上，並讓Pi可以順利收到來自encoder的邏輯電流，故將encoder�
 
     * **(如果還是沒看到紅點)：**
         * 在左側列表展開剛剛新增的 **LaserScan**
-        * 把 **Reliability Policy** 的從 `Reliable` 改成 **`Best Effort`**。
+        * 把 **Reliability Policy** 的從 `Reliable` 改成 **`Best Effort`**
+        *
+        
+  ![image](https://github.com/user-attachments/assets/3b77b091-95ad-4234-8edc-260fdf74c4be)
+
+        
 
 
 
