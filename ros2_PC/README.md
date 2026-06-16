@@ -83,24 +83,6 @@ ros2 topic echo /viz_map_data
 
 ---
 
-## 🧩 系統組件清單
-
-### ✅ 已完成（WSL 端）
-
-- Web UI（index.html）
-- JavaScript 邏輯（map_viewer.js）
-- 路徑記憶（trust_map_solver.py）
-- 系統啟動（start_all.py）
-- 測試工具（test_navigation.py）
-
-### ⏳ 待實作（PI 端）
-
-- GPIO 馬達驅動
-- 編碼器讀取
-- 導航演算法
-- 參考：`pi_motor_controller_template.py`
-
----
 
 ## 🛠 常見問題（Troubleshooting）
 
